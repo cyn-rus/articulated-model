@@ -1,0 +1,105 @@
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background: #e4e2e2;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+main h1 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+p {
+  margin: auto 0.5rem;
+}
+
+.select-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.utils {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.rotation-slider, .scaling-slider {
+  display: flex;
+  flex-direction: row;
+}
+
+.rotation, .scaling, .translation, .camera-angle, .texture, .others, .shading, .help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 2rem;
+}
+
+.help {
+  width: 15rem;
+}
+
+.rotation {
+  margin-left: 0;
+}
+
+.translation-button, .camera-button, .projection-button, .others-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.translation-button button {
+  width: 1.8rem;
+}
+
+.bottom-key {
+  margin-top: 0.2rem;
+}
+
+.camera-button button {
+  width: 5rem;
+  margin-bottom: 0.2rem;
+}
+
+.others-button {
+  display: flex;
+  flex-direction: column;
+}
+
+.others-button button {
+  width: 4rem;
+  margin-bottom: 0.2rem;
+}
+
+#on-shading, #on-texture {
+  margin-bottom: 0.2rem;
+}
+
+.help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+canvas {
+  border: 1px solid black;
+  margin: auto;
+  margin-top: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
