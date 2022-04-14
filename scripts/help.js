@@ -5,7 +5,7 @@ document.getElementById('help').addEventListener('mouseover', () => {
 });
 
 document.getElementById('select').addEventListener('mouseover', () => {
-    helpPane.innerHTML = `Choose a hollow object to interact.`;
+    helpPane.innerHTML = `Choose an articulated model to interact.`;
 });
 
 document.getElementById('rotateX').addEventListener('mouseover', () => {

@@ -1,10 +1,44 @@
-let program
+let program, p_matrix, v_matrix, n_matrix, m_matrix
 const canvas = document.querySelector('#glCanvas')
 const gl = canvas.getContext("webgl")
 const vertexBuffer = gl.createBuffer()
 const colorBuffer = gl.createBuffer()
 const normalBuffer = gl.createBuffer()
 const textureBuffer = gl.createBuffer()
+let objects = []
+let vertices = []
+
+function createObjects() {
+	const model_matrix = [
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+  ]
+  const proj_matrix = [
+    2 / canvas.clientWidth, 0, 0, 0,
+    0, -2 / canvas.clientHeight, 0, 0,
+    0, 0, 2 / (canvas.clientWidth / 2), 0,
+    -0.2, 0.3, 0, 1,
+  ]
+
+  vertices = [
+    // left column front
+            0,   0,  0,
+           30,   0,  0,
+            0, 150,  0,
+            0, 150,  0,
+           30,   0,  0,
+           30, 150,  0,
+    // //torso
+    // -0.15,0.2,-0.15,  0.15,0.2,-0.15,   0.15,-0.2,-0.15,  -0.15,-0.2,-0.15,    // back face
+    // -0.15,0.2,0.15,   0.15,0.2,0.15,    0.15,-0.2,0.15,   -0.15,-0.2,0.15,     // front
+    // -0.15,-0.2,0.15,  0.15,-0.2,0.15,   0.15,-0.2,-0.15,  -0.15,-0.2,-0.15,    // bottom
+    // -0.15,0.2,0.15,   0.15,0.2,0.15,    0.15,0.2,-0.15,   -0.15,0.2,-0.15,     // top
+    // -0.15,-0.2,0.15,  -0.15,-0.2,-0.15, -0.15,0.2,-0.15,  -0.15,0.2,0.15,      // left
+    // 0.15,-0.2,0.15,   0.15,-0.2,-0.15,  0.15,0.2,-0.15,   0.15,0.2,0.15,       // right
+  ]
+}
 
 function init() {
   if (!gl) throw new Error("This web browser doesn't support WebGL!")
@@ -73,6 +107,8 @@ function init() {
   const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragS)
 
   program = createProgram(vertexShader, fragmentShader)
+  
+  createBuffer()
 }
 
 function createShader(type, source) {
@@ -97,29 +133,67 @@ function createProgram(vertexShader, fragmentShader) {
 }
 
 function createBuffer() {
+	const view_matrix = [
+    1, 0, 0, 0, 
+    0, 1, 0, 0, 
+    0, 0, 1, 0, 
+    0, 0, 0, 1
+  ]
+  const model_matrix = [
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1
+  ]
+  const proj_matrix = [
+    2 / canvas.clientWidth, 0, 0, 0,
+    0, -2 / canvas.clientHeight, 0, 0,
+    0, 0, 2 / (canvas.clientWidth / 2), 0,
+    -0.2, 0.3, 0, 1,
+  ]
+
+  vertices = initModel1()
+  tes = initColorModel1()
+  
   const position = gl.getAttribLocation(program, "position")
-  gl.enableVertexArray(position)
+  gl.enableVertexAttribArray(position)
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-  // gambar
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
   gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0)
 
   const color = gl.getAttribLocation(program, "color")
-  gl.enableVertexArray(color)
-  // warna
+  gl.enableVertexAttribArray(color)
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
+  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(tes), gl.STATIC_DRAW)
   gl.vertexAttribPointer(color, 3, gl.UNSIGNED_BYTE, true, 0, 0)
 
-  // n_matrix = gl.getUniformLocation(program, "n_matrix");
-	// let normalMatrix = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  n_matrix = gl.getUniformLocation(program, "n_matrix");
+	let normalMatrix = [
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0
+  ]
 	const normal = gl.getAttribLocation(program, "normal");
 	gl.enableVertexAttribArray(normal);
 	gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-	// gl.uniformMatrix4fv(n_matrix, false, normalMatrix);
+	gl.uniformMatrix4fv(n_matrix, false, normalMatrix);
 	gl.vertexAttribPointer(normal, 3, gl.FLOAT, false, 0, 0);
 
   const texture = gl.getAttribLocation(program, "texture")
   gl.enableVertexAttribArray(texture)
   gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer)
   gl.vertexAttribPointer(texture, 2, gl.FLOAT, false, 0, 0)
+
+  p_matrix = gl.getUniformLocation(program, "p_matrix")
+  v_matrix = gl.getUniformLocation(program, "v_matrix")
+  m_matrix = gl.getUniformLocation(program, "m_matrix")
+
+  gl.uniformMatrix4fv(p_matrix, false, proj_matrix)
+  gl.uniformMatrix4fv(v_matrix, false, view_matrix)
+  gl.uniformMatrix4fv(m_matrix, false, model_matrix)
+
+  gl.drawArrays(gl.TRIANGLE_FAN, 0, vertices.length * 6)
 }
 
 init()
