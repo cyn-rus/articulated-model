@@ -8,38 +8,6 @@ const textureBuffer = gl.createBuffer()
 let objects = []
 let vertices = []
 
-function createObjects() {
-	const model_matrix = [
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1
-  ]
-  const proj_matrix = [
-    2 / canvas.clientWidth, 0, 0, 0,
-    0, -2 / canvas.clientHeight, 0, 0,
-    0, 0, 2 / (canvas.clientWidth / 2), 0,
-    -0.2, 0.3, 0, 1,
-  ]
-
-  vertices = [
-    // left column front
-            0,   0,  0,
-           30,   0,  0,
-            0, 150,  0,
-            0, 150,  0,
-           30,   0,  0,
-           30, 150,  0,
-    // //torso
-    // -0.15,0.2,-0.15,  0.15,0.2,-0.15,   0.15,-0.2,-0.15,  -0.15,-0.2,-0.15,    // back face
-    // -0.15,0.2,0.15,   0.15,0.2,0.15,    0.15,-0.2,0.15,   -0.15,-0.2,0.15,     // front
-    // -0.15,-0.2,0.15,  0.15,-0.2,0.15,   0.15,-0.2,-0.15,  -0.15,-0.2,-0.15,    // bottom
-    // -0.15,0.2,0.15,   0.15,0.2,0.15,    0.15,0.2,-0.15,   -0.15,0.2,-0.15,     // top
-    // -0.15,-0.2,0.15,  -0.15,-0.2,-0.15, -0.15,0.2,-0.15,  -0.15,0.2,0.15,      // left
-    // 0.15,-0.2,0.15,   0.15,-0.2,-0.15,  0.15,0.2,-0.15,   0.15,0.2,0.15,       // right
-  ]
-}
-
 function init() {
   if (!gl) throw new Error("This web browser doesn't support WebGL!")
 
@@ -152,8 +120,8 @@ function createBuffer() {
     -0.2, 0.3, 0, 1,
   ]
 
-  vertices = initModel1()
-  tes = initColorModel1()
+  vertices = [...initModel1()]
+  tes = [...initColorModel1()]
   
   const position = gl.getAttribLocation(program, "position")
   gl.enableVertexAttribArray(position)
@@ -192,8 +160,6 @@ function createBuffer() {
   gl.uniformMatrix4fv(p_matrix, false, proj_matrix)
   gl.uniformMatrix4fv(v_matrix, false, view_matrix)
   gl.uniformMatrix4fv(m_matrix, false, model_matrix)
-
-  gl.drawArrays(gl.TRIANGLE_FAN, 0, vertices.length * 6)
 }
 
 init()

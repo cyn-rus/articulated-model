@@ -26,11 +26,21 @@ function rotate(axis, angle) {
 	}
 }
 function translation(tx, ty, tz) {
-	return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, tx, ty, tz, 1];
+	return [
+    1, 0, 0, 0, 
+    0, 1, 0, 0, 
+    0, 0, 1, 0, 
+    tx, ty, tz, 1
+  ]
 }
 
 function scaling(sx, sy, sz) {
-	return [sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 1];
+	return [
+    sx, 0, 0, 0, 
+    0, sy, 0, 0, 
+    0, 0, sz, 0, 
+    0, 0, 0, 1
+  ]
 }
 
 function setGeometry(gl, vertices) {

@@ -16,7 +16,6 @@ function draw(model_matrix) {
   gl.drawArrays(gl.TRIANGLES, 0, vertices.length * 6)
 }
 
-const model_matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 const rotateX = document.getElementById("rotateX")
 rotateX.addEventListener("input", (e) => {
   rot[0] = e.target.value

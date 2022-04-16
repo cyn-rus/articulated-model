@@ -19,4 +19,10 @@ function calculateMatrix(matrix, translationPos, rotationPos, scale) {
   m = multiply(m, scaling(scale, scale, scale)) 
 
   return m
-} 
+}
+
+function requestCORSIfNotSameOrigin(img, url) {
+  if ((new URL(url, window.location.href,)).origin !== window.location.origin) {
+    img.crossOrigin = "";
+  }
+}

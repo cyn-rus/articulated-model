@@ -1,3 +1,10 @@
+let model_matrix = [
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1,
+]
+
 function initModel1() {
   return [
     // torso
@@ -332,5 +339,198 @@ function initColorModel1() {
     200, 200, 70,
     200, 200, 70,
     200, 200, 70,
+
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    200,  70, 120,
+    
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+    80,  70, 200,
+
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+    70, 200, 210,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+    76, 210, 100,
+
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
+    200, 200, 70,
   ]
+}
+
+function initTexture() {
+  return [
+    {
+      target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+      url: "https://webglfundamentals.org/webgl/resources/images/computer-history-museum/pos-x.jpg",
+    }, {
+      target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+      url: "https://webglfundamentals.org/webgl/resources/images/computer-history-museum/neg-x.jpg",
+    }, {
+      target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+      url: 'https://webglfundamentals.org/webgl/resources/images/computer-history-museum/pos-y.jpg',
+    }, {
+      target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+      url: 'https://webglfundamentals.org/webgl/resources/images/computer-history-museum/neg-y.jpg',
+    }, {
+      target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+      url: 'https://webglfundamentals.org/webgl/resources/images/computer-history-museum/pos-z.jpg',
+    }, {
+      target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+      url: 'https://webglfundamentals.org/webgl/resources/images/computer-history-museum/neg-z.jpg',
+    },
+  ]
+}
+
+function createModel1() {
+  const texture = gl.createTexture()
+  gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture)
+
+  initTexture().forEach((faceInfo) => {
+    const { target, url } = faceInfo
+
+    const level = 0
+    const internalFormat = gl.RGBA
+    const width = 512
+    const height = 512
+    const format = gl.RGBA
+    const type = gl.UNSIGNED_BYTE
+
+    gl.texImage2D(target, level, internalFormat, width, height, 0, format, type, null)
+
+    const image = new Image()
+    requestCORSIfNotSameOrigin(image, url)
+    image.src = url
+    image.addEventListener('load', function() {
+      gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture)
+      gl.texImage2D(target, level, internalFormat, format, type, image)
+      gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
+    })
+  })
+  gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
+  gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
 }
