@@ -5,13 +5,6 @@ select.addEventListener("change", (e) => {
   traverseModel1()
 })
 
-const proj_matrix = [
-  2 / canvas.clientWidth, 0, 0, 0,
-  0, -2 / canvas.clientHeight, 0, 0,
-  0, 0, 2 / (canvas.clientWidth / 2), 0,
-  -0.2, 0.3, 0, 1,
-]
-
 const rotateX = document.getElementById("rotateX")
 rotateX.addEventListener("input", (e) => {
   objects[currModel].rotation[0] = e.target.value

@@ -11,7 +11,7 @@ function calculateMatrix(matrix, translationPos, rotationPos) {
   let m = multiply(matrix, rotate('x', degToRad(rotationPos[0])))
   m = multiply(m, rotate('y', degToRad(rotationPos[1])))
   m = multiply(m, rotate('z', degToRad(rotationPos[2])))
-  
+
   // Translation
   m = multiply(m, translation(translationPos[0], translationPos[1], translationPos[2]))
  
