@@ -482,7 +482,7 @@ function initColorModel1() {
   ]
 }
 
-function initTexture() {
+function getTextureModel1() {
   return [
     {
       target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -506,31 +506,38 @@ function initTexture() {
   ]
 }
 
-function createModel1() {
+function loadModel1Texture() {
   const texture = gl.createTexture()
   gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture)
 
-  initTexture().forEach((faceInfo) => {
+  getTextureModel1().forEach((faceInfo) => {
     const { target, url } = faceInfo
 
     const level = 0
     const internalFormat = gl.RGBA
     const width = 512
     const height = 512
+    const border = 0
     const format = gl.RGBA
     const type = gl.UNSIGNED_BYTE
+    const pixel = null
 
-    gl.texImage2D(target, level, internalFormat, width, height, 0, format, type, null)
+    gl.texImage2D(target, level, internalFormat, width, height, border, format, type, pixel)
 
     const image = new Image()
     requestCORSIfNotSameOrigin(image, url)
-    image.src = url
     image.addEventListener('load', function() {
       gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture)
       gl.texImage2D(target, level, internalFormat, format, type, image)
-      gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
+      if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+        gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
+      } else {
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MAP_LINEAR)
+      }
     })
+    image.src = url
   })
-  gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
-  gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+  return texture
 }

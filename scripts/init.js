@@ -1,4 +1,4 @@
-let program, p_matrix, v_matrix, n_matrix, m_matrix
+let program, p_matrix, v_matrix, n_matrix, m_matrix, cubeMap, worldCameraPosition
 const canvas = document.querySelector('#glCanvas')
 const gl = canvas.getContext("webgl")
 const vertexBuffer = gl.createBuffer()
@@ -7,6 +7,54 @@ const normalBuffer = gl.createBuffer()
 const textureBuffer = gl.createBuffer()
 let objects = []
 let vertices = []
+
+function setNormals() {
+  const normals = new Float32Array(
+    [
+      0, 0, -1,
+      0, 0, -1,
+      0, 0, -1,
+      0, 0, -1,
+      0, 0, -1,
+      0, 0, -1,
+
+      0, 0, 1,
+      0, 0, 1,
+      0, 0, 1,
+      0, 0, 1,
+      0, 0, 1,
+      0, 0, 1,
+
+      0, 1, 0,
+      0, 1, 0,
+      0, 1, 0,
+      0, 1, 0,
+      0, 1, 0,
+      0, 1, 0,
+
+      0, -1, 0,
+      0, -1, 0,
+      0, -1, 0,
+      0, -1, 0,
+      0, -1, 0,
+      0, -1, 0,
+
+      -1, 0, 0,
+      -1, 0, 0,
+      -1, 0, 0,
+      -1, 0, 0,
+      -1, 0, 0,
+      -1, 0, 0,
+
+      1, 0, 0,
+      1, 0, 0,
+      1, 0, 0,
+      1, 0, 0,
+      1, 0, 0,
+      1, 0, 0,
+    ])
+  gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW)
+}
 
 function init() {
   if (!gl) throw new Error("This web browser doesn't support WebGL!")
@@ -33,6 +81,8 @@ function init() {
     varying vec3 v_color;
     varying vec2 v_texture;
     varying float v_isTexture;
+    varying vec3 v_worldPosition;
+    varying vec3 v_worldNormal;
 
     void main() {
       gl_Position = p_matrix * v_matrix * m_matrix * position;
@@ -47,6 +97,8 @@ function init() {
       v_lighting = ambientLight + (directionalLightColor * directional);
       v_color = color;
       v_texture = texture;
+      v_worldPosition = (m_matrix * position).xyz;
+      v_worldNormal = mat3(m_matrix) * vec3(normal);
     }
   `
   const vertexShader = createShader(gl.VERTEX_SHADER, vertexS)
@@ -59,17 +111,33 @@ function init() {
     varying vec3 v_lighting;
     varying vec2 v_texture;
     uniform float v_isTexture;
+    varying vec3 v_worldPosition;
+    varying vec3 v_worldNormal;
 
     uniform sampler2D u_sampler;
+    uniform samplerCube u_cubeMap;
+
+    uniform vec3 u_worldCameraPosition;
+
+    uniform int mode;
 
     void main() {
-      vec4 texelColor = texture2D(u_sampler, v_texture);
+      // if (mode === 0) {
+      vec3 worldNormal = normalize(v_worldNormal);
+      vec3 eyeToSurfaceDir = normalize(v_worldPosition - u_worldCameraPosition);
+      vec3 direction = reflect(eyeToSurfaceDir, worldNormal);
+      vec4 texelColor = textureCube(u_cubeMap, direction);
+      vec4 color = vec4(v_color.rgb, 1.0);
 
-      if (v_isTexture == 1.0) {
-        gl_FragColor = vec4(texelColor.rgb * v_lighting, 1.);
-      } else if (v_isTexture == 0.0) {
-        gl_FragColor = vec4(v_color.rgb * v_lighting, 1.);
-      }
+      // gl_FragColor = texelColor * color;
+
+      gl_FragColor = vec4(texelColor.rgb, 1.);
+      // }
+
+      // if (v_isTexture == 1.0) {
+      // } else if (v_isTexture == 0.0) {
+        // gl_FragColor = vec4(v_color.rgb, 1.);
+      // }
     }
   `
   const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragS)
@@ -121,7 +189,7 @@ function createBuffer() {
   ]
 
   vertices = [...initModel1()]
-  tes = [...initColorModel1()]
+  modelColor = [...initColorModel1()]
   
   const position = gl.getAttribLocation(program, "position")
   gl.enableVertexAttribArray(position)
@@ -132,7 +200,7 @@ function createBuffer() {
   const color = gl.getAttribLocation(program, "color")
   gl.enableVertexAttribArray(color)
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(tes), gl.STATIC_DRAW)
+  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(modelColor), gl.STATIC_DRAW)
   gl.vertexAttribPointer(color, 3, gl.UNSIGNED_BYTE, true, 0, 0)
 
   n_matrix = gl.getUniformLocation(program, "n_matrix");
@@ -145,6 +213,7 @@ function createBuffer() {
 	const normal = gl.getAttribLocation(program, "normal");
 	gl.enableVertexAttribArray(normal);
 	gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  setNormals()
 	gl.uniformMatrix4fv(n_matrix, false, normalMatrix);
 	gl.vertexAttribPointer(normal, 3, gl.FLOAT, false, 0, 0);
 
@@ -156,6 +225,8 @@ function createBuffer() {
   p_matrix = gl.getUniformLocation(program, "p_matrix")
   v_matrix = gl.getUniformLocation(program, "v_matrix")
   m_matrix = gl.getUniformLocation(program, "m_matrix")
+  cubeMap = gl.getUniformLocation(program, "u_cubeMap")
+  worldCameraPosition = gl.getUniformLocation(program, "u_worldCameraPosition")
 
   gl.uniformMatrix4fv(p_matrix, false, proj_matrix)
   gl.uniformMatrix4fv(v_matrix, false, view_matrix)

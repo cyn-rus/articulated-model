@@ -84,6 +84,7 @@ function root1() {
   // check shading
 
   // check texture
+  loadCubeTexture(getTextureModel1())
 
   for (let i = 0; i < 6; i++) {
     gl.drawArrays(gl.TRIANGLES, i * 6, 6)
