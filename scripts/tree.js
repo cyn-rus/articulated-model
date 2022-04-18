@@ -77,6 +77,10 @@ function traverseAll(roots) {
   }
 }
 
+function traverseModel1() {
+  traverse(0, [])
+}
+
 function root1() {
   let instanceMatrix = multiply(model_matrix, translation(-0.5, 0.0, 0.0))
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
@@ -84,7 +88,7 @@ function root1() {
   // check shading
 
   // check texture
-  loadCubeTexture(getTextureModel1())
+  // loadCubeTexture(getTextureModel1())
 
   for (let i = 0; i < 6; i++) {
     gl.drawArrays(gl.TRIANGLES, i * 6, 6)
@@ -138,5 +142,3 @@ function rightArm1() {
 for (let i = 0; i < numNodes; i++) {
   initNodes(i)
 }
-
-traverseAll(idRoots)
