@@ -42,3 +42,12 @@ shadingToggle.addEventListener("click", () => {
   gl.uniform1i(is_shaded, toggle);
   traverseId(currId);
 });
+
+const objectSliders = document.querySelectorAll("[id^='objectSlider']")
+for (let i = 0; i < objectSliders.length; i++) {
+  objectSliders[i].addEventListener("input", (e) => {
+    objects[currModel].rotation[i] = 0.5 * e.target.value
+    initNodes(i)
+    traverseId(currId)
+  });
+}
