@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Articulated Models</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="options">
+            <h1 class="title">Articulated Models</h1>
+            <div class="objectMenu">
+                <h2>Object</h2>
+                <select id="objectMenu">
+                    <option value="" disabled selected>Select object</option>
+                    <option value="object1">1</option>
+                    <option value="object2">2</option>
+                </select>
+            </div>
+            <div class="canvasContainer">
+                <!-- <button id="resetCanvas">Reset Canvas</button> -->
+                <button id="resetInputs">Reset Sliders</button>
+                <button id="saveFile">Save</button>
+                <input type="file" id="inputFile" accept="json" />
+            </div>
+            <div class="">
+                <h3>Shading</h3>
+                <button onclick="toggleShading()">Toggle Shading</button>
+                <button onclick="toggleImage()">Toggle Image</button>
+                <button onclick="toggleEnvironment()">Toggle Environment Mapping</button>
+            </div>
+            <div class="cameraAndProjection">
+                <div class="cameraMenu">
+                    <h3>Camera Distance</h3>
+                    <input type="range" name="camera-distance" id="cameraDistance" min="1" max="300" value="100" />
+                    <h3>Camera Angle</h3>
+                    <input type="range" name="camera-angle" id="cameraAngle" min="0" max="360" value="0" />
+                </div>
+            </div>
+            <div class="transformMenu">
+                <div class="transform">
+                    <h3>Rotate</h3>
+                    <div class="slider">
+                        <p>X</p><input type="range" name="object-rotate-slider-x" id="objectRotateSliderX" min="-360"
+                            max="360" value="40">
+                    </div>
+                    <div class="slider">
+                        <p>Y</p>
+                        <input type="range" name="object-rotate-slider-y" id="objectRotateSliderY" min="-360" max="360"
+                            value="-25">
+                    </div>
+                    <div class="slider">
+                        <p>Z</p>
+                        <input type="range" name="object-rotate-slider-z" id="objectRotateSliderZ" min="-360" max="360"
+                            value="0">
+                    </div>
+                    <!-- <h3>Translate</h3>
+                    <div class="slider">
+                        <p>X</p>
+                        <input type="range" name="object-translate-slider-x" id="objectTranslateSliderX" min="-720"
+                            max="720" value="0">
+                    </div>
+                    <div class="slider">
+                        <p>Y</p>
+                        <input type="range" name="object-translate-slider-y" id="objectTranslateSliderY" min="-720"
+                            max="720" value="0">
+                    </div>
+                    <div class="slider">
+                        <p>Z</p>
+                        <input type="range" name="object-translate-slider-z" id="objectTranslateSliderZ" min="-360"
+                            max="360" value="0">
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="canvas">
+            <canvas id="gl-canvas" width="720" height="720">
+                Oops ... your browser doesn't support the HTML5 canvas element
+            </canvas>
+        </div>
+        <div class="" id="objectControls">
+        </div>
+    </div>
+
+    <script src="../data/dummy.js"></script>
+    <script src="node.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

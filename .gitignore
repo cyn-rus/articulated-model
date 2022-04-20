@@ -1,0 +1,7 @@
+.vscode
+/data/*.**
+!/data/model1.json
+!/data/bricks.jpg
+!/data/bill.json
+!/data/dummy.json
+!/data/dummy.js
