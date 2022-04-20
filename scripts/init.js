@@ -89,6 +89,7 @@ function createObjects() {
     proj_matrix: proj_matrix,
     model_matrix: model_matrix,
     rotation: [0, 0, 0, 0, 0],
+    animation: 0,
   })
 }
 
