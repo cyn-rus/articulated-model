@@ -40,8 +40,7 @@ function initNodes(id) {
 
     case idLeftHand1:
       m = translation(0, 0, 0)
-      m = calculateMatrix(m, [0, 0, 0], objects[currModel].rotation)
-      // m = multiply(m, rotate("x", 0))
+      m = multiply(m, rotate("x", 0))
       figure[id] = createNode(m, leftHand1, idRightHand1, idLeftArm1)
       break
 
@@ -105,7 +104,7 @@ function root1() {
 }
 
 function leftHand1() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].translation, objects[currModel].rotation)
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
@@ -116,7 +115,7 @@ function leftHand1() {
 }
 
 function leftArm1() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].translation, objects[currModel].rotation)
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
@@ -127,7 +126,7 @@ function leftArm1() {
 }
 
 function rightHand1() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].translation, objects[currModel].rotation)
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
@@ -138,7 +137,7 @@ function rightHand1() {
 }
 
 function rightArm1() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].translation, objects[currModel].rotation)
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
