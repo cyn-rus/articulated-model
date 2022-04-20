@@ -88,8 +88,8 @@ function createObjects() {
     color: initColorModel1(),
     proj_matrix: proj_matrix,
     model_matrix: model_matrix,
-    rotation: [0, 0, 0],
-    translation: [0, 0, 0],
+    rotation: [0, 0, 0, 0, 0],
+    animation: 0,
   })
 }
 
@@ -290,28 +290,18 @@ function createBuffer() {
   const objectControls = document.getElementById("object-control")
   objectControls.innerHTML = ''
 
-  for (let i = 0; i < numNodes; i++) {
-    if (i == 0 || i== 5) i++
+  for (let i = 0; i <= numNodes; i++) {
+    if (i === 0 || i === 6) i++
     const slider = `
       <div style="display: flex;">
         <p>${
           "Part " + i
         }</p>
-        <input type="range" value="180" min="0" max="360" id="${"objectSlider" + i}" />
+        <input type="range" value="0" min="0" max="360" id="${"objectSlider" + i}" />
       </div>
     `;
     objectControls.innerHTML += slider;
   };
-
-  var objectSliders = document.querySelectorAll(
-    "[id^='objectSlider']"
-  );
-
-  for (let i = 0; i < objectSliders.length; i++) {
-    objectSliders[i].addEventListener("change", function () {
-      // TODO render();
-    });
-  }
 }
 
 createObjects()

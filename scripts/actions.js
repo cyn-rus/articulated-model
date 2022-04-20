@@ -35,10 +35,27 @@ textureToggle.addEventListener("click", () => {
   traverseId(currId)
 });
 
-var toggle = false;
 const shadingToggle = document.getElementById("toggle-shading");
 shadingToggle.addEventListener("click", () => {
-  toggle = !toggle;
-  gl.uniform1i(is_shaded, toggle);
+  gl.uniform1i(is_shaded, shadingToggle.checked);
   traverseId(currId);
 });
+
+const objectSliders = document.querySelectorAll("[id^='objectSlider']")
+for (let i = 0; i < objectSliders.length; i++) {
+  objectSliders[i].addEventListener("input", (e) => {
+    objects[currModel].rotation[i] = 0.5 * e.target.value
+    initNodes(i)
+    traverseId(currId)
+  });
+}
+
+const animationToggle = document.getElementById("toggle-animate")
+animationToggle.addEventListener("click", () => {
+  if (!animationToggle.checked) {
+    isAnimating = false
+  } else {
+    isAnimating = true
+    animate()
+  }
+})
