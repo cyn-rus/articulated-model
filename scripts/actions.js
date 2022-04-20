@@ -23,50 +23,15 @@ rotateZ.addEventListener("input", (e) => {
   traverseId(currId)
 })
 
-const imageToggle = document.getElementById("toggle-image");
-const environmentToggle = document.getElementById("toggle-environment");
-imageToggle.addEventListener("click", () => {
-  if (imageToggle.checked) {
-    environmentToggle.checked = false;
-    gl.uniform1i(mode, currModel);
+const textureToggle = document.getElementById("toggle-texture")
+textureToggle.addEventListener("click", () => {
+  if (!textureToggle.checked) {
+    gl.uniform1i(mode, -1)
   } else {
-    gl.uniform1i(mode, -1);
+    gl.uniform1i(mode, currModel)
   }
-  switch (currModel) {
-    case 0:
-      gl.activeTexture(gl.TEXTURE0);
-      loadCubeTexture(getTextureModel1());
-      break;
-    case 1:
-      gl.activeTexture(gl.TEXTURE1);
-      loadTexture(IMAGE_URL);
-      break;
-    default:
-      break;
-  }
-  traverseId(currId);
-});
 
-environmentToggle.addEventListener("click", () => {
-  if (environmentToggle.checked) {
-    imageToggle.checked = false;
-    gl.uniform1i(mode, currModel);
-  } else {
-    gl.uniform1i(mode, -1);
-  }
-  switch (currModel) {
-    case 0:
-      gl.activeTexture(gl.TEXTURE0);
-      loadCubeTexture(getTextureModel1());
-      break;
-    case 1:
-      gl.activeTexture(gl.TEXTURE1);
-      loadTexture(IMAGE_URL);
-      break;
-    default:
-      break;
-  }
-  traverseId(currId);
+  traverseId(currId)
 });
 
 var toggle = false;
