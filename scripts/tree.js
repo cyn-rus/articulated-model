@@ -10,10 +10,17 @@ const idLeftHand1 = 1
 const idLeftArm1 = 2
 const idRightHand1 = 3
 const idRightArm1 = 4
-const idRoots = [0]
+
+const idRoot2 = 5
+const idLeftArm2 = 6
+const idRightArm2 = 7
+const idLeftLeg2 = 8
+const idRightLeg2 = 9
+
+const idRoots = [0, 5]
 let currId = 0
 
-const numNodes = 5
+const numNodes = 10
 
 function createNode(transform, render, sibling, child) {
   const node = {
@@ -61,6 +68,36 @@ function initNodes(id) {
       m = multiply(m, rotate("y", 0))
       figure[id] = createNode(m, rightArm1, null, null)
       break
+
+    case idRoot2:
+      m = translation(0, 0, 0)
+      m = multiply(m, rotate("y", 0))
+      figure[id] = createNode(m, root2, null, [idLeftArm2, idRightArm2, idLeftLeg2, idRightLeg2])
+      break
+
+    case idLeftArm2:
+      m = translation(0, 0, 0)
+      m = multiply(m, rotate("y", 0))
+      figure[id] = createNode(m, leftArm2, null, null)
+      break
+
+    case idRightArm2:
+      m = translation(0, 0, 0)
+      m = multiply(m, rotate("y", 0))
+      figure[id] = createNode(m, rightArm2, null, null)
+      break
+
+    case idLeftLeg2:
+      m = translation(0, 0, 0)
+      m = multiply(m, rotate("y", 0))
+      figure[id] = createNode(m, leftLeg2, null, null)
+      break
+
+    case idRightLeg2:
+      m = translation(0, 0, 0)
+      m = multiply(m, rotate("y", 0))
+      figure[id] = createNode(m, rightLeg2, null, null)
+      break
   }
 }
 
@@ -105,7 +142,6 @@ function root1() {
 
 function leftHand1() {
   let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
-  // let instanceMatrix = multiply(selectedObject.model_matrix, rotate("z", degToRad(document.getElementById(`${"objectSlider"+idLeftHand1}`).value)));
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
@@ -145,6 +181,56 @@ function rightArm1() {
 
   for (let i = 0; i < 6; i++) {
     gl.drawArrays(gl.TRIANGLES, 36 * 4 + i * 6, 6)
+  }
+}
+
+// Root2
+function root2() {
+  let instanceMatrix = multiply(selectedObject.model_matrix, translation(-0.5, 0.0, 0.0))
+  gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
+
+  for (let i = 0; i < 5; i++) {
+    gl.drawArrays(gl.TRIANGLES, i * 6, 6)
+  }
+}
+
+// LeftArm2
+function leftArm2() {
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
+
+  for (let i = 0; i < 6; i++) {
+    gl.drawArrays(gl.TRIANGLES, 24 + i * 6, 6)
+  }
+}
+
+// RightArm2
+function rightArm2() {
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
+
+  for (let i = 0; i < 6; i++) {
+    gl.drawArrays(gl.TRIANGLES, (24 + 36 * 2) + i * 6, 6)
+  }
+}
+
+// LeftLeg2
+function leftLeg2() {
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
+
+  for (let i = 0; i < 6; i++) {
+    gl.drawArrays(gl.TRIANGLES, (24 + 36 * 3) + i * 6, 6)
+  }
+}
+
+// RightLeg2
+function rightLeg2() {
+  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
+
+  for (let i = 0; i < 6; i++) {
+    gl.drawArrays(gl.TRIANGLES, (24 + 36 * 4) + i * 6, 6)
   }
 }
 

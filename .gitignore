@@ -1,2 +1,6 @@
 /**/model.json
 .vscode
+/scripts/models/**.*
+!/scripts/models/model1.js
+!/scripts/models/model2.js
+!/scripts/models/bricks.jpg
