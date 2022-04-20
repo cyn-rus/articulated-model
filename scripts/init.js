@@ -15,7 +15,6 @@ const colorBuffer = gl.createBuffer()
 const normalBuffer = gl.createBuffer()
 const textureBuffer = gl.createBuffer()
 let objects = []
-let selectedObject = {}
 let vertices = []
 let view_matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 let currModel = 0
@@ -86,6 +85,16 @@ function createObjects() {
     name: "model1",
     vertices: initModel1(),
     color: initColorModel1(),
+    proj_matrix: proj_matrix,
+    model_matrix: model_matrix,
+    rotation: [0, 0, 0, 0, 0],
+    animation: 0,
+  })
+
+  objects.push({
+    name: "model2",
+    vertices: initModel2(),
+    color: initColorModel2(),
     proj_matrix: proj_matrix,
     model_matrix: model_matrix,
     rotation: [0, 0, 0, 0, 0],
@@ -247,13 +256,13 @@ function createBuffer() {
   const position = gl.getAttribLocation(program, "position")
   gl.enableVertexAttribArray(position)
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(selectedObject.vertices), gl.STATIC_DRAW)
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[currModel].vertices), gl.STATIC_DRAW)
   gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0)
 
   const color = gl.getAttribLocation(program, "color")
   gl.enableVertexAttribArray(color)
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(selectedObject.color), gl.STATIC_DRAW)
+  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(objects[currModel].color), gl.STATIC_DRAW)
   gl.vertexAttribPointer(color, 3, gl.UNSIGNED_BYTE, true, 0, 0)
 
   n_matrix = gl.getUniformLocation(program, "n_matrix");
@@ -305,5 +314,4 @@ function createBuffer() {
 }
 
 createObjects()
-selectedObject = objects[0]
 init()

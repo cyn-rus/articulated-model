@@ -65,32 +65,27 @@ function initNodes(id) {
       break
 
     case idRoot2:
-      m = translation(0, 0, 0)
-      m = multiply(m, rotate("y", 0))
-      figure[id] = createNode(m, root2, null, [idLeftArm2, idRightArm2, idLeftLeg2, idRightLeg2])
+      m = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idRoot2])))
+      figure[id] = createNode(m, root2, null, idLeftArm2)
       break
 
     case idLeftArm2:
-      m = translation(0, 0, 0)
-      m = multiply(m, rotate("y", 0))
-      figure[id] = createNode(m, leftArm2, null, null)
+      m = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idLeftArm2])))
+      figure[id] = createNode(m, leftArm2, null, idRightArm2)
       break
 
     case idRightArm2:
-      m = translation(0, 0, 0)
-      m = multiply(m, rotate("y", 0))
-      figure[id] = createNode(m, rightArm2, null, null)
+      m = multiply(objects[0].model_matrix, rotate("y", degToRad(objects[1].rotation[idRightArm2])))
+      figure[id] = createNode(m, rightArm2, null, idLeftLeg2)
       break
 
     case idLeftLeg2:
-      m = translation(0, 0, 0)
-      m = multiply(m, rotate("y", 0))
-      figure[id] = createNode(m, leftLeg2, null, null)
+      m = multiply(objects[0].model_matrix, rotate("y", degToRad(objects[1].rotation[idLeftLeg2])))
+      figure[id] = createNode(m, leftLeg2, null, idRightLeg2)
       break
 
     case idRightLeg2:
-      m = translation(0, 0, 0)
-      m = multiply(m, rotate("y", 0))
+      m = multiply(objects[0].model_matrix, rotate("y", degToRad(objects[1].rotation[idRightLeg2])))
       figure[id] = createNode(m, rightLeg2, null, null)
       break
   }
@@ -172,17 +167,23 @@ function rightExtended1() {
 
 // Root2
 function root2() {
-  let instanceMatrix = multiply(selectedObject.model_matrix, translation(-0.5, 0.0, 0.0))
+  let instanceMatrix = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idRoot2])))
+  objects[1].model_matrix = instanceMatrix
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   for (let i = 0; i < 5; i++) {
-    gl.drawArrays(gl.TRIANGLES, i * 6, 6)
+    if (i < 2) {
+      gl.drawArrays(gl.TRIANGLES, i * 3, 3)
+    } else {
+      gl.drawArrays(gl.TRIANGLES, 6 + i * 6, 3)
+    }
   }
 }
 
 // LeftArm2
 function leftArm2() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  let instanceMatrix = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idLeftArm2])))
+  objects[1].model_matrix = instanceMatrix
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   for (let i = 0; i < 6; i++) {
@@ -192,7 +193,8 @@ function leftArm2() {
 
 // RightArm2
 function rightArm2() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  let instanceMatrix = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idRightArm2])))
+  objects[1].model_matrix = instanceMatrix
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   for (let i = 0; i < 6; i++) {
@@ -202,7 +204,8 @@ function rightArm2() {
 
 // LeftLeg2
 function leftLeg2() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  let instanceMatrix = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idLeftLeg2])))
+  objects[1].model_matrix = instanceMatrix
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   for (let i = 0; i < 6; i++) {
@@ -212,7 +215,8 @@ function leftLeg2() {
 
 // RightLeg2
 function rightLeg2() {
-  let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  let instanceMatrix = multiply(objects[1].model_matrix, rotate("y", degToRad(objects[1].rotation[idRightLeg2])))
+  objects[1].model_matrix = instanceMatrix
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   for (let i = 0; i < 6; i++) {

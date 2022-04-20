@@ -2,6 +2,7 @@ traverseId(currId)
 const select = document.getElementById("select")
 select.addEventListener("change", (e) => {
   currId = select.value == 1 ? 0 : 5
+  currModel = select.value -1
   init()
   traverseId(currId)
 })
