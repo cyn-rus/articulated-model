@@ -9,6 +9,7 @@ let objects = []
 let selectedObject = {}
 let vertices = []
 let view_matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+let currModel = 0
 
 function setNormals() {
   const normals = new Float32Array(
@@ -223,13 +224,9 @@ function createBuffer() {
     -0.2, 0.3, 0, 1,
   ]
 
-  // vertices = [...initModel1()]
-  // modelColor = [...initColorModel1()]
-  
   const position = gl.getAttribLocation(program, "position")
   gl.enableVertexAttribArray(position)
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-  // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW)
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(selectedObject.vertices), gl.STATIC_DRAW)
   gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0)
 
@@ -237,7 +234,6 @@ function createBuffer() {
   gl.enableVertexAttribArray(color)
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
   gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(selectedObject.color), gl.STATIC_DRAW)
-  // gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(modelColor), gl.STATIC_DRAW)
   gl.vertexAttribPointer(color, 3, gl.UNSIGNED_BYTE, true, 0, 0)
 
   n_matrix = gl.getUniformLocation(program, "n_matrix");
