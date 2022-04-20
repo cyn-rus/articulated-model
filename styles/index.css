@@ -26,14 +26,15 @@ p {
 .select-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 50px;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 .utils {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .rotation-slider, .scaling-slider {
@@ -59,7 +60,7 @@ p {
 .translation-button, .camera-button, .projection-button, .others-button {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .translation-button button {
@@ -102,4 +103,19 @@ canvas {
   margin-top: 1rem;
   background-color: white;
   border-radius: 0.5rem;
+}
+
+.menu {
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#object-control {
+  display: flex;
+  flex-direction: column;
 }
