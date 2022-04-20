@@ -1,8 +1,9 @@
 traverseId(currId)
 const select = document.getElementById("select")
 select.addEventListener("change", (e) => {
-  traverseId(currId)
+  currId = select.value == 1 ? 0 : 5
   init()
+  traverseId(currId)
 })
 
 const rotateX = document.getElementById("rotateX")
@@ -36,7 +37,7 @@ textureToggle.addEventListener("click", () => {
 
 var toggle = false;
 const shadingToggle = document.getElementById("toggle-shading");
-shadingToggle.addEventListener("change", () => {
+shadingToggle.addEventListener("click", () => {
   toggle = !toggle;
   gl.uniform1i(is_shaded, toggle);
   traverseId(currId);

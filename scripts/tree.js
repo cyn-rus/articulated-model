@@ -105,6 +105,7 @@ function root1() {
 
 function leftHand1() {
   let instanceMatrix = calculateMatrix(selectedObject.model_matrix, objects[currModel].rotation)
+  // let instanceMatrix = multiply(selectedObject.model_matrix, rotate("z", degToRad(document.getElementById(`${"objectSlider"+idLeftHand1}`).value)));
   gl.uniformMatrix4fv(m_matrix, false, instanceMatrix)
 
   // checkshading
