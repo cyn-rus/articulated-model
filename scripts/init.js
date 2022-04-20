@@ -88,6 +88,7 @@ function createObjects() {
     color: initColorModel1(),
     proj_matrix: proj_matrix,
     model_matrix: model_matrix,
+    view_matrix: view_matrix,
     rotation: [0, 0, 0, 0, 0],
     animation: 0,
   })

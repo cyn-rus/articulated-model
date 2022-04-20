@@ -59,3 +59,13 @@ animationToggle.addEventListener("click", () => {
     animate()
   }
 })
+
+const cameraDistance = document.getElementById("camera-distance")
+let currDistance = 0
+cameraDistance.addEventListener("input", (e) => {
+  const value = e.target.value > 0 ? (e.target.value > currDistance ? 1.1 : 0.9) : (e.target.value < currDistance ? 1.1 : 0.9)
+  currDistance = e.target.value
+  objects[currModel].view_matrix = multiply(scaling(value, value, value), objects[currModel].view_matrix)
+  gl.uniformMatrix4fv(v_matrix, false, objects[currModel].view_matrix)
+  traverseId(currId)
+})
