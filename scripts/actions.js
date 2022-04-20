@@ -27,10 +27,10 @@ const imageToggle = document.getElementById("toggle-image");
 const environmentToggle = document.getElementById("toggle-environment");
 imageToggle.addEventListener("click", () => {
   if (imageToggle.checked) {
+    environmentToggle.checked = false;
     gl.uniform1i(mode, currModel);
   } else {
     gl.uniform1i(mode, -1);
-    environmentToggle.checked = false;
   }
   switch (currModel) {
     case 0:
@@ -49,10 +49,10 @@ imageToggle.addEventListener("click", () => {
 
 environmentToggle.addEventListener("click", () => {
   if (environmentToggle.checked) {
+    imageToggle.checked = false;
     gl.uniform1i(mode, currModel);
   } else {
     gl.uniform1i(mode, -1);
-    imageToggle.checked = false;
   }
   switch (currModel) {
     case 0:

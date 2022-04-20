@@ -166,36 +166,28 @@ function init() {
         vec3 eyeToSurfaceDir = normalize(v_worldPosition - u_worldCameraPosition);
         vec3 direction = reflect(eyeToSurfaceDir, worldNormal);
         vec4 texelColor = textureCube(u_cubeMap, direction);
-        if (is_shaded) {
+        if (is_shaded == 1) {
           gl_FragColor = vec4(texelColor.rgb * v_lighting, 1.);
         } else {
           gl_FragColor = vec4(texelColor.rgb, 1.);
         }
       } else if (mode == 1) {
         // image mapping
-        vec4 texelColor = texture2D(u_sampler_img, v_texture);
-        if (is_shaded) {
-          gl_FragColor = vec4(texelColor.rgb * v_lighting, 1.0);
-        } else {
-          gl_FragColor = vec4(texelColor.rgb, 1.0);
-        }
+        // vec4 texelColor = texture2D(u_sampler, v_texture);
+        // if (is_shaded == 1) {
+        //   gl_FragColor = vec4(texelColor.rgb * v_lighting, 1.0);
+        // } else {
+        //   gl_FragColor = vec4(texelColor.rgb, 1.0);
+        // }
       } else {
         // color
         vec4 color = vec4(v_color.rgb, 1.0);
-        if (is_shaded) {
+        if (is_shaded == 1) {
           gl_FragColor = vec4(v_color.rgb * v_lighting, 1.);
         } else {
           gl_FragColor = vec4(v_color.rgb, 1.);
         }
       }
-
-      // gl_FragColor = texelColor * color;
-
-
-      // if (v_isTexture == 1.0) {
-      // } else if (v_isTexture == 0.0) {
-        // gl_FragColor = vec4(v_color.rgb, 1.);
-      // }
     }
   `
   const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragS)
