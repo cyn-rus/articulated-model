@@ -119,3 +119,11 @@ canvas {
   display: flex;
   flex-direction: column;
 }
+
+.others {
+  margin-right: 5rem;
+}
+
+.others button {
+  margin-bottom: 1rem;
+}

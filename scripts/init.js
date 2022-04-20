@@ -87,8 +87,12 @@ function createObjects() {
     color: initColorModel1(),
     proj_matrix: proj_matrix,
     model_matrix: model_matrix,
+    view_matrix: view_matrix,
     rotation: [0, 0, 0, 0, 0],
     animation: 0,
+    cameraDistance: 0,
+    isTexture: false,
+    isShading: false,
   })
 
   objects.push({
@@ -292,7 +296,7 @@ function createBuffer() {
 
   loadCubeTexture(getTextureModel1())
   gl.uniformMatrix4fv(p_matrix, false, proj_matrix)
-  gl.uniformMatrix4fv(v_matrix, false, view_matrix)
+  gl.uniformMatrix4fv(v_matrix, false, objects[currModel].view_matrix)
   gl.uniformMatrix4fv(m_matrix, false, model_matrix)
 
   const numNodes = 5
